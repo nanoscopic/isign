@@ -7,6 +7,7 @@ import os
 import plistlib
 from plistlib import PlistWriter
 import re
+import pkg_resources
 
 OUTPUT_DIRECTORY = '_CodeSignature'
 OUTPUT_FILENAME = 'CodeResources'
@@ -171,10 +172,8 @@ def get_template():
     Obtain the 'template' plist which also contains things like
     default rules about which files should count
     """
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(current_dir, TEMPLATE_FILENAME)
-    fh = open(template_path, 'r')
-    return plistlib.readPlist(fh)
+    stream = pkg_resources.resource_stream(__name__, TEMPLATE_FILENAME)
+    return plistlib.readPlist(stream)
 
 
 @memoize
