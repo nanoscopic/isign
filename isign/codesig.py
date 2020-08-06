@@ -3,6 +3,7 @@ import construct
 import hashlib
 import logging
 import macho_cs
+import plistlib
 
 log = logging.getLogger(__name__)
 
@@ -110,9 +111,9 @@ class Codesig(object):
             # so this is actually a difference between libs and apps
             # entitlements_data = macho_cs.Blob_.build(entitlements)
             # log.debug(hashlib.sha1(entitlements_data).hexdigest())
-
-            entitlements.bytes = entitlements_bytes
-            entitlements.length = len(entitlements_bytes) + 8
+            entitlements_as_string = plistlib.writePlistToString(entitlements_bytes)
+            entitlements.bytes = entitlements_as_string
+            entitlements.length = len(entitlements_as_string) + 8
             # entitlements_data = macho_cs.Blob_.build(entitlements)
             # log.debug(hashlib.sha1(entitlements_data).hexdigest())
 
