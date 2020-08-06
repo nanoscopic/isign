@@ -1,10 +1,9 @@
 # encoding: utf-8
-import os.path
 import json
+import pkg_resources
 
-package_dir = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(package_dir, "version.json"), 'r') as f:
-    version = json.load(f)
+stream = pkg_resources.resource_stream(__name__, "version.json")
+version = json.load(stream)
 
 __version__ = version['version']
 __commit__ = version['commit']
